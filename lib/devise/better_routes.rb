@@ -1,4 +1,7 @@
-require "devise/better_routes/version"
+require 'devise'
+require 'action_dispatch'
+require 'active_support'
+require 'devise/better_routes/version'
 
 module Devise
   module Controllers
@@ -55,6 +58,6 @@ module ActionDispatch
   end
 end
 
-ActiveSupport::Inflector.inflections(:en) do |inflect|
+ActiveSupport::Inflector.inflections do |inflect|
   inflect.uncountable %w( my me )
 end
