@@ -40,7 +40,7 @@ Using this gem makes the following routes:
                         PUT    /current_user(.:format)        current_users#update
                         DELETE /current_user(.:format)        current_users#destroy
 
-And also makes URL helpers, such as `new_registration_path` -> `new_user_path`.
+And also makes delegating URL helpers, such as `new_registration_path` -> `new_user_path`.
 
 Then you can create two controllers as follows:
 
