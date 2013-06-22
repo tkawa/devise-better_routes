@@ -17,9 +17,9 @@ Devise makes the following registration routes:
                              PUT    /users(.:format)         devise/registrations#update
                              DELETE /users(.:format)         devise/registrations#destroy
 
-These routes has a few problems.
+These routes have a few problems.
 
-* These confuse the resource which represents "all users" and the resource which represents "myself".
+* These confuse the resource which represents "all users" and the resource which represents "myself"
 * What is the "registrations" which does not correspond to URL?
 
 ## Solution
@@ -40,7 +40,9 @@ Using this gem makes the following routes:
                         PUT    /current_user(.:format)        current_users#update
                         DELETE /current_user(.:format)        current_users#destroy
 
-And you can create two controllers as follows:
+And also makes URL helpers, such as `new_registration_path` -> `new_user_path`.
+
+Then you can create two controllers as follows:
 
     # app/controllers/users_controller.rb
     class UsersController < Devise::RegistrationsController
