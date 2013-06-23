@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['tkawa@4bit.net']
   spec.description   = %q{Better routes patch for Devise}
   spec.summary       = %q{Better routes patch for Devise}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/tkawa/devise-better_routes'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
