@@ -8,12 +8,21 @@ module Devise
     module UrlHelpers
       def self.override_registration_helpers!(registration_routes = nil)
         helper_mappings = {
-          registration: '#{scope.to_s.pluralize}',
           new_registration: 'new_#{scope}',
           edit_registration: 'edit_current_#{scope}',
           cancel_registration: 'cancel_current_#{scope}'
         }
         [:path, :url].each do |path_or_url|
+          class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1
+            def registration_#{path_or_url}(resource_or_scope, *args)
+              scope = Devise::Mapping.find_scope!(resource_or_scope)
+              if respond_to?(:controller_name) && controller_name == "current_\#{scope.to_s.pluralize}"
+                send("current_\#{scope}_#{path_or_url}", *args)
+              else
+                send("\#{scope.to_s.pluralize}_#{path_or_url}", *args)
+              end
+            end
+          URL_HELPERS
           helper_mappings.each do |old_name, new_name|
             method = "#{old_name}_#{path_or_url}"
             class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1

@@ -64,6 +64,11 @@ describe Devise::BetterRoutes do
       it 'registration_path is delegated to users_path' do
         expect(registration_path(:user)).to eq users_path
       end
+      it 'registration_path is delegated to current_user_path on current_users' do
+        instance_eval { def controller_name; 'current_users' end }
+        expect(registration_path(:user)).to eq current_user_path
+        instance_eval { undef controller_name }
+      end
       it 'new_registration_path is delegated to new_user_path' do
         expect(new_registration_path(:user)).to eq new_user_path
       end
@@ -83,6 +88,11 @@ describe Devise::BetterRoutes do
       specify { expect(current_rails_programmer_path).to eq '/current_rails_programmer' }
       it 'registration_path is delegated to rails_programmers_path' do
         expect(registration_path(:rails_programmer)).to eq rails_programmers_path
+      end
+      it 'registration_path is delegated to current_rails_programmer_path on current_rails_programmers' do
+        instance_eval { def controller_name; 'current_rails_programmers' end }
+        expect(registration_path(:rails_programmer)).to eq current_rails_programmer_path
+        instance_eval { undef controller_name }
       end
       it 'new_registration_path is delegated to new_rails_programmer_path' do
         expect(new_registration_path(:rails_programmer)).to eq new_rails_programmer_path

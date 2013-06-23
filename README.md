@@ -41,6 +41,9 @@ Using this gem makes the following routes:
                         DELETE /current_user(.:format)        current_users#destroy
 
 And also makes delegating URL helpers, such as `new_registration_path` -> `new_user_path`.
+Default views of Devise just work fine.
+
+(However, you should not use `registration` helper anymore because a registration resource does not exist.)
 
 Then you can create two controllers as follows:
 
