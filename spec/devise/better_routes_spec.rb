@@ -50,4 +50,48 @@ describe Devise::BetterRoutes do
       delete('/current_rails_programmer').should route_to('current_rails_programmers#destroy')
     end
   end
+
+  describe 'URL helpers for users' do
+    include Rails.application.routes.url_helpers
+    include Devise::Controllers::UrlHelpers
+    it { users_path.should eq '/users' }
+    it { new_user_path.should eq '/users/new' }
+    it { cancel_current_user_path.should eq '/current_user/cancel' }
+    it { edit_current_user_path.should eq '/current_user/edit' }
+    it { current_user_path.should eq '/current_user' }
+    it 'registration_path is delegated to users_path' do
+      registration_path(:user).should eq users_path
+    end
+    it 'new_registration_path is delegated to new_user_path' do
+      new_registration_path(:user).should eq new_user_path
+    end
+    it 'cancel_registration_path is delegated to cancel_current_user_path' do
+      cancel_registration_path(:user).should eq cancel_current_user_path
+    end
+    it 'edit_registration_path is delegated to edit_current_user_path' do
+      edit_registration_path(:user).should eq edit_current_user_path
+    end
+  end
+
+  describe 'URL helpers for rails_programmers' do
+    include Rails.application.routes.url_helpers
+    include Devise::Controllers::UrlHelpers
+    it { rails_programmers_path.should eq '/rails_programmers' }
+    it { new_rails_programmer_path.should eq '/rails_programmers/new' }
+    it { cancel_current_rails_programmer_path.should eq '/current_rails_programmer/cancel' }
+    it { edit_current_rails_programmer_path.should eq '/current_rails_programmer/edit' }
+    it { current_rails_programmer_path.should eq '/current_rails_programmer' }
+    it 'registration_path is delegated to rails_programmers_path' do
+      registration_path(:rails_programmer).should eq rails_programmers_path
+    end
+    it 'new_registration_path is delegated to new_rails_programmer_path' do
+      new_registration_path(:rails_programmer).should eq new_rails_programmer_path
+    end
+    it 'cancel_registration_path is delegated to cancel_current_rails_programmer_path' do
+      cancel_registration_path(:rails_programmer).should eq cancel_current_rails_programmer_path
+    end
+    it 'edit_registration_path is delegated to edit_current_rails_programmer_path' do
+      edit_registration_path(:rails_programmer).should eq edit_current_rails_programmer_path
+    end
+  end
 end
