@@ -9,15 +9,16 @@ module Devise
       def self.override_registration_helpers!(registration_routes = nil)
         helper_mappings = {
           new_registration: 'new_#{scope}',
-          edit_registration: 'edit_current_#{scope}',
-          cancel_registration: 'cancel_current_#{scope}'
+          edit_registration: 'edit_#{current_resource_name}',
+          cancel_registration: 'cancel_#{current_resource_name}'
         }
         [:path, :url].each do |path_or_url|
           class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1
             def registration_#{path_or_url}(resource_or_scope, *args)
               scope = Devise::Mapping.find_scope!(resource_or_scope)
-              if respond_to?(:controller_name) && controller_name == "current_\#{scope.to_s.pluralize}"
-                send("current_\#{scope}_#{path_or_url}", *args)
+              current_resource_name = _devise_path_name(scope, "current_\#{scope}")
+              if respond_to?(:controller_name) && controller_name == current_resource_name.pluralize
+                send("\#{current_resource_name}_#{path_or_url}", *args)
               else
                 send("\#{scope.to_s.pluralize}_#{path_or_url}", *args)
               end
@@ -28,6 +29,7 @@ module Devise
             class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1
               def #{method}(resource_or_scope, *args)
                 scope = Devise::Mapping.find_scope!(resource_or_scope)
+                current_resource_name = _devise_path_name(scope, "current_\#{scope}")
                 send("#{new_name}_#{path_or_url}", *args)
               end
             URL_HELPERS
@@ -39,6 +41,11 @@ module Devise
       def self.run_generate_hooks!
         self.override_registration_helpers!(Devise::URL_HELPERS[:registration])
       end
+
+      def _devise_path_name(scope, name)
+        Devise.mappings[scope].path_names[name.to_sym]
+      end
+      private :_devise_path_name
     end
   end
 

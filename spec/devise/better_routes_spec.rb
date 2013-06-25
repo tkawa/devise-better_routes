@@ -36,18 +36,18 @@ describe Devise::BetterRoutes do
       it 'routes to rails_programmers#new' do
         expect(get('/rails_programmers/new')).to route_to('rails_programmers#new')
       end
-      it 'routes to current_rails_programmers#cancel' do
-        expect(get('/current_rails_programmer/cancel')).to route_to('current_rails_programmers#cancel')
+      it 'routes to me#cancel' do
+        expect(get('/me/cancel')).to route_to('me#cancel')
       end
-      it 'routes to current_rails_programmers#edit' do
-        expect(get('/current_rails_programmer/edit')).to route_to('current_rails_programmers#edit')
+      it 'routes to me#edit' do
+        expect(get('/me/edit')).to route_to('me#edit')
       end
-      it 'routes to current_rails_programmers#update' do
-        expect(put('/current_rails_programmer')).to route_to('current_rails_programmers#update')
-        #expect(patch('/current_rails_programmer')).to route_to('current_rails_programmers#update')
+      it 'routes to me#update' do
+        expect(put('/me')).to route_to('me#update')
+        #expect(patch('/me')).to route_to('me#update')
       end
-      it 'routes to current_rails_programmers#destroy' do
-        expect(delete('/current_rails_programmer')).to route_to('current_rails_programmers#destroy')
+      it 'routes to me#destroy' do
+        expect(delete('/me')).to route_to('me#destroy')
       end
     end
   end
@@ -83,25 +83,25 @@ describe Devise::BetterRoutes do
     describe 'rails_programmers' do
       specify { expect(rails_programmers_path).to eq '/rails_programmers' }
       specify { expect(new_rails_programmer_path).to eq '/rails_programmers/new' }
-      specify { expect(cancel_current_rails_programmer_path).to eq '/current_rails_programmer/cancel' }
-      specify { expect(edit_current_rails_programmer_path).to eq '/current_rails_programmer/edit' }
-      specify { expect(current_rails_programmer_path).to eq '/current_rails_programmer' }
+      specify { expect(cancel_me_path).to eq '/me/cancel' }
+      specify { expect(edit_me_path).to eq '/me/edit' }
+      specify { expect(me_path).to eq '/me' }
       it 'registration_path is delegated to rails_programmers_path' do
         expect(registration_path(:rails_programmer)).to eq rails_programmers_path
       end
-      it 'registration_path is delegated to current_rails_programmer_path on current_rails_programmers' do
-        instance_eval { def controller_name; 'current_rails_programmers' end }
-        expect(registration_path(:rails_programmer)).to eq current_rails_programmer_path
+      it 'registration_path is delegated to me_path on me' do
+        instance_eval { def controller_name; 'me' end }
+        expect(registration_path(:rails_programmer)).to eq me_path
         instance_eval { undef controller_name }
       end
       it 'new_registration_path is delegated to new_rails_programmer_path' do
         expect(new_registration_path(:rails_programmer)).to eq new_rails_programmer_path
       end
-      it 'cancel_registration_path is delegated to cancel_current_rails_programmer_path' do
-        expect(cancel_registration_path(:rails_programmer)).to eq cancel_current_rails_programmer_path
+      it 'cancel_registration_path is delegated to cancel_me_path' do
+        expect(cancel_registration_path(:rails_programmer)).to eq cancel_me_path
       end
-      it 'edit_registration_path is delegated to edit_current_rails_programmer_path' do
-        expect(edit_registration_path(:rails_programmer)).to eq edit_current_rails_programmer_path
+      it 'edit_registration_path is delegated to edit_me_path' do
+        expect(edit_registration_path(:rails_programmer)).to eq edit_me_path
       end
     end
   end
