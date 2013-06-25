@@ -56,6 +56,25 @@ Then you can create two controllers as follows:
     end
 
 
+## Option
+
+If you don't like "current_user", you can specify the name.
+
+    # config/routes.rb
+    devise_for :users, path_names: {current_user: 'me'}
+
+Do you like this one?
+
+        users POST   /users(.:format)     users#create
+     new_user GET    /users/new(.:format) users#new
+    cancel_me GET    /me/cancel(.:format) me#cancel
+      edit_me GET    /me/edit(.:format)   me#edit
+           me PATCH  /me(.:format)        me#update
+              PUT    /me(.:format)        me#update
+              DELETE /me(.:format)        me#destroy
+
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
