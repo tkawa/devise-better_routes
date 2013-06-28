@@ -62,9 +62,25 @@ module ActionDispatch
       protected
         def devise_registration(mapping, controllers)
           path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
-          current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
-          resources mapping.path, only: [:create, :new]
-          resource current_resource_name, only: [:edit, :update, :destroy] do
+          current_resource_name = mapping.path_names["current_#{mapping.name}".to_sym]
+          resources_controller_name =
+            if controllers.include?(mapping.path.to_sym)
+              controllers[mapping.path.to_sym]
+            elsif controllers.include?(:registrations)
+              controllers[:registrations]
+            else
+              nil
+            end
+          current_resource_controller_name =
+            if controllers.include?(current_resource_name.to_sym)
+              controllers[current_resource_name.to_sym]
+            elsif controllers.include?(:registrations)
+              controllers[:registrations]
+            else
+              nil
+            end
+          resources mapping.path, only: [:create, :new], controller: resources_controller_name
+          resource current_resource_name, only: [:edit, :update, :destroy], controller: current_resource_controller_name do
             get :cancel
           end
         ensure
