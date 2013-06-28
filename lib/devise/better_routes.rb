@@ -60,6 +60,19 @@ module ActionDispatch
   module Routing
     class Mapper
       protected
+        def devise_session(mapping, controllers)
+          current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
+          path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
+          resource current_resource_name, only: [] do
+            resource :session, only: [:create, :destroy], controller: controllers[:sessions]
+            resource :session, only: [], controller: controllers[:sessions], path: '' do
+              get :new, path: mapping.path_names[:'session/new'], as: 'new'
+            end
+          end
+        ensure
+          @scope[:path], @scope[:as] = path, as
+        end
+
         def devise_registration(mapping, controllers)
           path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
           current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
