@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  devise :registerable
+  devise :database_authenticatable, :registerable
 end
