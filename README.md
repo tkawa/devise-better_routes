@@ -73,7 +73,11 @@ Do you like this one?
               PUT    /me(.:format)        me#update
               DELETE /me(.:format)        me#destroy
 
+## Changes
 
+### 0.0.3
+
+* __Add session routes__
 
 ## Installation
 
