@@ -13,11 +13,12 @@ module Devise
           cancel_registration: 'cancel_#{current_resource_name}'
         }
         [:path, :url].each do |path_or_url|
+          # TODO: use real helper name
           class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1
             def registration_#{path_or_url}(resource_or_scope, *args)
               scope = Devise::Mapping.find_scope!(resource_or_scope)
               current_resource_name = _devise_path_name(scope, "current_\#{scope}")
-              if respond_to?(:controller_name) && controller_name == current_resource_name.pluralize
+              if respond_to?(:controller_name) && controller_name == _devise_registration_controller(scope, current_resource_name)
                 send("\#{current_resource_name}_#{path_or_url}", *args)
               else
                 send("\#{scope.to_s.pluralize}_#{path_or_url}", *args)
@@ -45,7 +46,17 @@ module Devise
       def _devise_path_name(scope, name)
         Devise.mappings[scope].path_names[name.to_sym]
       end
-      private :_devise_path_name
+      def _devise_registration_controller(scope, name)
+        controllers = Devise.mappings[scope].controllers
+        if controllers.include?(name.to_sym)
+          controllers[name.to_sym]
+        elsif controllers.include?(:registrations)
+          controllers[:registrations]
+        else
+          name.pluralize
+        end
+      end
+      private :_devise_path_name, :_devise_registration_controller
     end
   end
 
