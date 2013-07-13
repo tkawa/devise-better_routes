@@ -6,5 +6,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 RSpec.configure do |config|
-  # some config ...
+  config.include Rails.application.routes.url_helpers, type: :helper
+  config.include Devise::Controllers::UrlHelpers, type: :helper
 end
