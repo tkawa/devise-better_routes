@@ -35,6 +35,21 @@ describe Devise::BetterRoutes, type: :routing do
         expect(get('/current_user/session/new')).to route_to('devise/sessions#new')
       end
     end
+
+    context 'password' do
+      it 'routes to devise/passwords#create' do
+        expect(post('/current_user/password')).to route_to('devise/passwords#create')
+      end
+      it 'routes to devise/passwords#update' do
+        expect(put('/current_user/password')).to route_to('devise/passwords#update')
+      end
+      it 'routes to devise/passwords#new' do
+        expect(get('/current_user/password/new')).to route_to('devise/passwords#new')
+      end
+      it 'routes to devise/passwords#edit' do
+        expect(get('/current_user/password/edit')).to route_to('devise/passwords#edit')
+      end
+    end
   end
 
   describe 'rails_programmers' do
@@ -69,6 +84,21 @@ describe Devise::BetterRoutes, type: :routing do
       end
       it 'routes to devise/sessions#new' do
         expect(get('/me/session/new')).to route_to('devise/sessions#new')
+      end
+    end
+
+    context 'password' do
+      it 'routes to devise/passwords#create' do
+        expect(post('/me/password')).to route_to('devise/passwords#create')
+      end
+      it 'routes to devise/passwords#update' do
+        expect(put('/me/password')).to route_to('devise/passwords#update')
+      end
+      it 'routes to devise/passwords#new' do
+        expect(get('/me/password/new')).to route_to('devise/passwords#new')
+      end
+      it 'routes to devise/passwords#edit' do
+        expect(get('/me/password/edit')).to route_to('devise/passwords#edit')
       end
     end
   end
@@ -107,6 +137,21 @@ describe Devise::BetterRoutes, type: :routing do
         expect(get('/current_programmer/session/new')).to route_to('devise/sessions#new')
       end
     end
+
+    context 'password' do
+      it 'routes to devise/passwords#create' do
+        expect(post('/current_programmer/password')).to route_to('devise/passwords#create')
+      end
+      it 'routes to devise/passwords#update' do
+        expect(put('/current_programmer/password')).to route_to('devise/passwords#update')
+      end
+      it 'routes to devise/passwords#new' do
+        expect(get('/current_programmer/password/new')).to route_to('devise/passwords#new')
+      end
+      it 'routes to devise/passwords#edit' do
+        expect(get('/current_programmer/password/edit')).to route_to('devise/passwords#edit')
+      end
+    end
   end
 
   describe 'engineers' do
@@ -141,6 +186,21 @@ describe Devise::BetterRoutes, type: :routing do
       end
       it 'routes to devise/sessions#new' do
         expect(get('/current_engineer/session/new')).to route_to('devise/sessions#new')
+      end
+    end
+
+    context 'password' do
+      it 'routes to devise/passwords#create' do
+        expect(post('/current_engineer/password')).to route_to('devise/passwords#create')
+      end
+      it 'routes to devise/passwords#update' do
+        expect(put('/current_engineer/password')).to route_to('devise/passwords#update')
+      end
+      it 'routes to devise/passwords#new' do
+        expect(get('/current_engineer/password/new')).to route_to('devise/passwords#new')
+      end
+      it 'routes to devise/passwords#edit' do
+        expect(get('/current_engineer/password/edit')).to route_to('devise/passwords#edit')
       end
     end
   end

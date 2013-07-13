@@ -84,6 +84,17 @@ module ActionDispatch
           @scope[:path], @scope[:as] = path, as
         end
 
+        def devise_password(mapping, controllers)
+          current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
+          path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
+          resource current_resource_name, only: [] do
+            resource :password, :only => [:new, :create, :edit, :update],
+              :path => mapping.path_names[:password], :controller => controllers[:passwords]
+          end
+        ensure
+          @scope[:path], @scope[:as] = path, as
+        end
+
         def devise_registration(mapping, controllers)
           path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
           current_resource_name = mapping.path_names["current_#{mapping.name}".to_sym]

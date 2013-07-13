@@ -31,6 +31,12 @@ describe Devise::BetterRoutes, type: :helper do
       specify { expect(current_user_session_path).to eq '/current_user/session' }
       specify { expect(new_current_user_session_path).to eq '/current_user/session/new' }
     end
+
+    context 'password' do
+      specify { expect(current_user_password_path).to eq '/current_user/password' }
+      specify { expect(new_current_user_password_path).to eq '/current_user/password/new' }
+      specify { expect(edit_current_user_password_path).to eq '/current_user/password/edit' }
+    end
   end
 
   describe 'rails_programmers' do
@@ -62,6 +68,12 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(me_session_path).to eq '/me/session' }
       specify { expect(new_me_session_path).to eq '/me/session/new' }
+    end
+
+    context 'password' do
+      specify { expect(me_password_path).to eq '/me/password' }
+      specify { expect(new_me_password_path).to eq '/me/password/new' }
+      specify { expect(edit_me_password_path).to eq '/me/password/edit' }
     end
   end
 
@@ -95,6 +107,12 @@ describe Devise::BetterRoutes, type: :helper do
       specify { expect(current_programmer_session_path).to eq '/current_programmer/session' }
       specify { expect(new_current_programmer_session_path).to eq '/current_programmer/session/new' }
     end
+
+    context 'password' do
+      specify { expect(current_programmer_password_path).to eq '/current_programmer/password' }
+      specify { expect(new_current_programmer_password_path).to eq '/current_programmer/password/new' }
+      specify { expect(edit_current_programmer_password_path).to eq '/current_programmer/password/edit' }
+    end
   end
 
   describe 'engineers' do
@@ -126,6 +144,12 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(current_engineer_session_path).to eq '/current_engineer/session' }
       specify { expect(new_current_engineer_session_path).to eq '/current_engineer/session/new' }
+    end
+
+    context 'password' do
+      specify { expect(current_engineer_password_path).to eq '/current_engineer/password' }
+      specify { expect(new_current_engineer_password_path).to eq '/current_engineer/password/new' }
+      specify { expect(edit_current_engineer_password_path).to eq '/current_engineer/password/edit' }
     end
   end
 end
