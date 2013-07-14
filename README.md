@@ -1,5 +1,8 @@
 # Devise::BetterRoutes
 
+[![Build Status](https://travis-ci.org/tkawa/devise-better_routes.png)](https://travis-ci.org/tkawa/devise-better_routes)
+[![Gem Version](https://badge.fury.io/rb/devise-better_routes.png)](http://badge.fury.io/rb/devise-better_routes)
+
 Better routes patch for Devise
 
 ## One of the issues of Devise
