@@ -75,6 +75,11 @@ Do you like this one?
 
 ## Changes
 
+### 0.0.4
+
+* __Add password routes__
+* Add URL helpers for session & password
+
 ### 0.0.3
 
 * __Add session routes__
