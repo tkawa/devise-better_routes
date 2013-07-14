@@ -6,6 +6,25 @@ require 'devise/better_routes/version'
 module Devise
   module Controllers
     module UrlHelpers
+      def self.override_current_resource_helpers!(routes = {})
+        routes.each do |module_name, actions|
+          [:path, :url].each do |path_or_url|
+            actions.each do |action|
+              action = action ? "#{action}_" : ""
+              method = "#{action}#{module_name}_#{path_or_url}"
+
+              class_eval <<-URL_HELPERS, __FILE__, __LINE__ + 1
+                def #{method}(resource_or_scope, *args)
+                  scope = Devise::Mapping.find_scope!(resource_or_scope)
+                  current_resource_name = _devise_path_name(scope, "current_\#{scope}")
+                  _devise_route_context.send("#{action}\#{current_resource_name}_#{module_name}_#{path_or_url}", *args)
+                end
+              URL_HELPERS
+            end
+          end
+        end
+      end
+
       def self.override_registration_helpers!(registration_routes = nil)
         helper_mappings = {
           new_registration: 'new_#{scope}',
@@ -19,9 +38,9 @@ module Devise
               scope = Devise::Mapping.find_scope!(resource_or_scope)
               current_resource_name = _devise_path_name(scope, "current_\#{scope}")
               if respond_to?(:controller_name) && controller_name == _devise_registration_controller(scope, current_resource_name)
-                send("\#{current_resource_name}_#{path_or_url}", *args)
+                _devise_route_context.send("\#{current_resource_name}_#{path_or_url}", *args)
               else
-                send("\#{scope.to_s.pluralize}_#{path_or_url}", *args)
+                _devise_route_context.send("\#{scope.to_s.pluralize}_#{path_or_url}", *args)
               end
             end
           URL_HELPERS
@@ -31,17 +50,18 @@ module Devise
               def #{method}(resource_or_scope, *args)
                 scope = Devise::Mapping.find_scope!(resource_or_scope)
                 current_resource_name = _devise_path_name(scope, "current_\#{scope}")
-                send("#{new_name}_#{path_or_url}", *args)
+                _devise_route_context.send("#{new_name}_#{path_or_url}", *args)
               end
             URL_HELPERS
           end
         end
       end
-      override_registration_helpers!(Devise::URL_HELPERS[:registration])
 
       def self.run_generate_hooks!
+        self.override_current_resource_helpers!(Devise::URL_HELPERS.slice(:session, :password))
         self.override_registration_helpers!(Devise::URL_HELPERS[:registration])
       end
+      run_generate_hooks!
 
       def _devise_path_name(scope, name)
         Devise.mappings[scope].path_names[name.to_sym]

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Devise::BetterRoutes, type: :routing do
-  describe 'users' do
+describe Devise::BetterRoutes, 'routing', type: :routing do
+  describe %|devise_for :users| do
     context 'registration' do
       it 'routes to users#create' do
         expect(post('/users')).to route_to('users#create')
@@ -52,7 +52,7 @@ describe Devise::BetterRoutes, type: :routing do
     end
   end
 
-  describe 'rails_programmers' do
+  describe %|devise_for :rails_programmers, path_names: {current_rails_programmer: 'me'}| do
     context 'registration' do
       it 'routes to rails_programmers#create' do
         expect(post('/rails_programmers')).to route_to('rails_programmers#create')
@@ -103,7 +103,7 @@ describe Devise::BetterRoutes, type: :routing do
     end
   end
 
-  describe 'programmers' do
+  describe %|devise_for :programmers, controllers: {programmers: 'rails_programmers', current_programmer: 'me'}| do
     context 'registration' do
       it 'routes to rails_programmers#create' do
         expect(post('/programmers')).to route_to('rails_programmers#create')
@@ -154,7 +154,7 @@ describe Devise::BetterRoutes, type: :routing do
     end
   end
 
-  describe 'engineers' do
+  describe %|devise_for :engineers, controllers: {registrations: 'rails_programmers'}| do
     context 'registration' do
       it 'routes to rails_programmers#create' do
         expect(post('/engineers')).to route_to('rails_programmers#create')

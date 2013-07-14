@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Devise::BetterRoutes, type: :helper do
-  describe 'users' do
+describe Devise::BetterRoutes, 'helpers', type: :helper do
+  describe %|devise_for :users| do
     context 'registration' do
       specify { expect(users_path).to eq '/users' }
       specify { expect(new_user_path).to eq '/users/new' }
@@ -30,16 +30,31 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(current_user_session_path).to eq '/current_user/session' }
       specify { expect(new_current_user_session_path).to eq '/current_user/session/new' }
+      it 'session_path is delegated to current_user_session_path' do
+        expect(session_path(:user)).to eq current_user_session_path
+      end
+      it 'new_session_path is delegated to new_current_user_session_path' do
+        expect(new_session_path(:user)).to eq new_current_user_session_path
+      end
     end
 
     context 'password' do
       specify { expect(current_user_password_path).to eq '/current_user/password' }
       specify { expect(new_current_user_password_path).to eq '/current_user/password/new' }
       specify { expect(edit_current_user_password_path).to eq '/current_user/password/edit' }
+      it 'password_path is delegated to current_user_password_path' do
+        expect(password_path(:user)).to eq current_user_password_path
+      end
+      it 'new_password_path is delegated to new_current_user_password_path' do
+        expect(new_password_path(:user)).to eq new_current_user_password_path
+      end
+      it 'edit_password_path is delegated to edit_current_user_password_path' do
+        expect(edit_password_path(:user)).to eq edit_current_user_password_path
+      end
     end
   end
 
-  describe 'rails_programmers' do
+  describe %|devise_for :rails_programmers, path_names: {current_rails_programmer: 'me'}| do
     context 'registration' do
       specify { expect(rails_programmers_path).to eq '/rails_programmers' }
       specify { expect(new_rails_programmer_path).to eq '/rails_programmers/new' }
@@ -68,16 +83,31 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(me_session_path).to eq '/me/session' }
       specify { expect(new_me_session_path).to eq '/me/session/new' }
+      it 'session_path is delegated to me_session_path' do
+        expect(session_path(:rails_programmer)).to eq me_session_path
+      end
+      it 'new_session_path is delegated to new_me_session_path' do
+        expect(new_session_path(:rails_programmer)).to eq new_me_session_path
+      end
     end
 
     context 'password' do
       specify { expect(me_password_path).to eq '/me/password' }
       specify { expect(new_me_password_path).to eq '/me/password/new' }
       specify { expect(edit_me_password_path).to eq '/me/password/edit' }
+      it 'password_path is delegated to me_password_path' do
+        expect(password_path(:rails_programmer)).to eq me_password_path
+      end
+      it 'new_password_path is delegated to new_user_password_path' do
+        expect(new_password_path(:rails_programmer)).to eq new_me_password_path
+      end
+      it 'edit_password_path is delegated to edit_me_password_path' do
+        expect(edit_password_path(:rails_programmer)).to eq edit_me_password_path
+      end
     end
   end
 
-  describe 'programmers' do
+  describe %|devise_for :programmers, controllers: {programmers: 'rails_programmers', current_programmer: 'me'}| do
     context 'registration' do
       specify { expect(programmers_path).to eq '/programmers' }
       specify { expect(new_programmer_path).to eq '/programmers/new' }
@@ -106,16 +136,31 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(current_programmer_session_path).to eq '/current_programmer/session' }
       specify { expect(new_current_programmer_session_path).to eq '/current_programmer/session/new' }
+      it 'session_path is delegated to current_programmer_session_path' do
+        expect(session_path(:programmer)).to eq current_programmer_session_path
+      end
+      it 'new_session_path is delegated to new_current_programmer_session_path' do
+        expect(new_session_path(:programmer)).to eq new_current_programmer_session_path
+      end
     end
 
     context 'password' do
       specify { expect(current_programmer_password_path).to eq '/current_programmer/password' }
       specify { expect(new_current_programmer_password_path).to eq '/current_programmer/password/new' }
       specify { expect(edit_current_programmer_password_path).to eq '/current_programmer/password/edit' }
+      it 'password_path is delegated to current_programmer_password_path' do
+        expect(password_path(:programmer)).to eq current_programmer_password_path
+      end
+      it 'new_password_path is delegated to new_current_programmer_password_path' do
+        expect(new_password_path(:programmer)).to eq new_current_programmer_password_path
+      end
+      it 'edit_password_path is delegated to edit_current_programmer_password_path' do
+        expect(edit_password_path(:programmer)).to eq edit_current_programmer_password_path
+      end
     end
   end
 
-  describe 'engineers' do
+  describe %|devise_for :engineers, controllers: {registrations: 'rails_programmers'}| do
     context 'registration' do
       specify { expect(engineers_path).to eq '/engineers' }
       specify { expect(new_engineer_path).to eq '/engineers/new' }
@@ -144,12 +189,27 @@ describe Devise::BetterRoutes, type: :helper do
     context 'session' do
       specify { expect(current_engineer_session_path).to eq '/current_engineer/session' }
       specify { expect(new_current_engineer_session_path).to eq '/current_engineer/session/new' }
+      it 'session_path is delegated to current_engineer_session_path' do
+        expect(session_path(:engineer)).to eq current_engineer_session_path
+      end
+      it 'new_session_path is delegated to new_current_engineer_session_path' do
+        expect(new_session_path(:engineer)).to eq new_current_engineer_session_path
+      end
     end
 
     context 'password' do
       specify { expect(current_engineer_password_path).to eq '/current_engineer/password' }
       specify { expect(new_current_engineer_password_path).to eq '/current_engineer/password/new' }
       specify { expect(edit_current_engineer_password_path).to eq '/current_engineer/password/edit' }
+      it 'password_path is delegated to current_engineer_password_path' do
+        expect(password_path(:engineer)).to eq current_engineer_password_path
+      end
+      it 'new_password_path is delegated to new_current_engineer_password_path' do
+        expect(new_password_path(:engineer)).to eq new_current_engineer_password_path
+      end
+      it 'edit_password_path is delegated to edit_current_engineer_password_path' do
+        expect(edit_password_path(:engineer)).to eq edit_current_engineer_password_path
+      end
     end
   end
 end
