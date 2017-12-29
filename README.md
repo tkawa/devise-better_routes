@@ -78,6 +78,10 @@ Do you like this one?
 
 ## Changes
 
+### 0.0.5
+
+* Support Rails 5
+
 ### 0.0.4
 
 * __Add password routes__
