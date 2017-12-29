@@ -93,7 +93,13 @@ module ActionDispatch
       protected
         def devise_session(mapping, controllers)
           current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
-          path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
+          current_scope = @scope.dup
+          if @scope.respond_to? :new
+            @scope = @scope.new(path: nil, as: nil)
+          else
+            @scope[:path] = nil
+            @scope[:as] = nil
+          end
           resource current_resource_name, only: [] do
             resource :session, only: [:create, :destroy], controller: controllers[:sessions]
             resource :session, only: [], controller: controllers[:sessions], path: '' do
@@ -101,22 +107,34 @@ module ActionDispatch
             end
           end
         ensure
-          @scope[:path], @scope[:as] = path, as
+          @scope = current_scope
         end
 
         def devise_password(mapping, controllers)
           current_resource_name = mapping.path_names["current_#{mapping.singular}".to_sym]
-          path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
+          current_scope = @scope.dup
+          if @scope.respond_to? :new
+            @scope = @scope.new(path: nil, as: nil)
+          else
+            @scope[:path] = nil
+            @scope[:as] = nil
+          end
           resource current_resource_name, only: [] do
             resource :password, :only => [:new, :create, :edit, :update],
               :path => mapping.path_names[:password], :controller => controllers[:passwords]
           end
         ensure
-          @scope[:path], @scope[:as] = path, as
+          @scope = current_scope
         end
 
         def devise_registration(mapping, controllers)
-          path, as, @scope[:path], @scope[:as] = @scope[:path], @scope[:as], nil, nil
+          current_scope = @scope.dup
+          if @scope.respond_to? :new
+            @scope = @scope.new(path: nil, as: nil)
+          else
+            @scope[:path] = nil
+            @scope[:as] = nil
+          end
           current_resource_name = mapping.path_names["current_#{mapping.name}".to_sym]
           resources_controller_name =
             if controllers.include?(mapping.path.to_sym)
@@ -139,7 +157,7 @@ module ActionDispatch
             get :cancel
           end
         ensure
-          @scope[:path], @scope[:as] = path, as
+          @scope = current_scope
         end
     end
   end
